@@ -1,101 +1,138 @@
 package org.firstinspires.ftc.teamcode.subsystems;
-import static com.sun.tools.javac.main.Option.S;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
-import com.qualcomm.robotcore.hardware.CRServo;
+import org.firstinspires.ftc.teamcode.input.GamepadStatic;
+import org.firstinspires.ftc.teamcode.lib.Command;
+import org.firstinspires.ftc.teamcode.lib.CommandSequence;
+import org.firstinspires.ftc.teamcode.util.Mechanism;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
-import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.arcrobotics.ftclib.command.Subsystem;
-import com.arcrobotics.ftclib.controller.PIDController;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
+import org.firstinspires.ftc.teamcode.util.PIDFController;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
 
-public class ArmSubsystem extends SubsystemBase {
-    private DcMotor Motor22ndEXT;
-    private DcMotor Motor1EXT;
-    private DcMotor Motor0SHLDR;
-    private CRServo Servo0WRIST;
-    private CRServo servo1;
-    private CRServo servo2;
-    private CRServo servo3;
-    private PIDController intakePID;
-    private final double P = 1.0; //
-    private final double I = 0.0; // Will need adjusting
-    private final double D = 0.0; //
+import org.firstinspires.ftc.teamcode.opmode.teleop.Controls;
 
+public class ArmSubsystem extends Mechanism {
+    private static double P = 0.00065;
+    private static double I = 0.0;
+    private static double D = 0.0;
+    private static double F = 0.0;
 
-    /** Creates a new ArmSubsystem. */
-    public ArmSubsystem() {
-        Motor22ndEXT = hardwareMap.get(DcMotor.class, "Motor-2-2ndEXT");
-        Motor1EXT = hardwareMap.get(DcMotor.class, "Motor-1-EXT");
-        Motor0SHLDR = hardwareMap.get(DcMotor.class, "Motor-0-SHLDR");
-        Servo0WRIST = hardwareMap.get(CRServo.class, "Servo-0-WRIST");
-        servo1 = hardwareMap.get(CRServo.class, "servo1");
-        servo2 = hardwareMap.get(CRServo.class, "servo2");
-        servo3 = hardwareMap.get(CRServo.class, "servo3");
+    private static double target = 0;
+    private static double actualTarget = 0;
+    private static double power = 0;
+    private PIDFController pidcontroller;
+    private DcMotorEx Motor1EXT;
+    private DcMotorEx Motor22ndEXT;
 
-        intakePID = new PIDController(P, I, D);
+    private VoltageSensor voltage;
+
+    private Command resetEncoders = () -> {
+        Motor1EXT.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Motor22ndEXT.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        //teleOp.Motor0SHLDR.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Motor1EXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
+        Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
+        //teleOp.Motor0SHLDR.setMode(RunMode.RUN_WITHOUT_ENCODER);
+    };
+
+    private CommandSequence waitToReset = new CommandSequence()
+            .addWaitCommand(1)
+            .addCommand(resetEncoders)
+            .build();
+
+    public ArmSubsystem(LinearOpMode opMode){
+        this.opMode = opMode;
+
     }
 
-    public void intake(){
-        servo2.setPower(1);
-        servo3.setPower(-1);
-    }
-
-    public void eject(){
-        servo2.setPower(-1);
-        servo3.setPower(1);
-    }
-
-    public void intakestop(){
-        servo2.setPower(0);
-        servo3.setPower(0);
-    }
-    public void open(){
-        servo1.setPower(-0.5);
-    }
-    public void close(){
-        servo1.setPower(0.05);
-    }
-    public void wristUp(){
-        Servo0WRIST.setPower(0.8);
-    }
-    public void wristmid(){
-        Servo0WRIST.setPower(0.4);
-    }
-    public void wristOrigin(){
-        Servo0WRIST.setPower(0);
-    }
+    @Override
+    public void init(HardwareMap hwMap) {
+        voltage = hwMap.voltageSensor.iterator().next();
+        pidcontroller = new PIDFController(P, I, D, F);
+        pidcontroller.setFeedForward(PIDFController.FeedForward.LINEAR);
+        pidcontroller.setRotationConstants(5000, 1425.1);
+        Motor1EXT = hwMap.get(DcMotorEx.class, "Motor-1-EXT");
+        Motor22ndEXT = hwMap.get(DcMotorEx.class, "Motor-2-2ndEXT");
 
 
+        Motor1EXT.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Motor22ndEXT.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        //teleOp.Motor0SHLDR.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
 
-    public void ArmMove(double armPow, int armTrack) {
-        if(armTrack == 1) {
-            Motor0SHLDR.setPower(armPow * 1);
-        }else if (armTrack == 2) {
-            Motor1EXT.setPower(armPow * 1);
-            Motor22ndEXT.setPower(armPow * -1);
+        //teleOp.Motor0SHLDR.setMode(RunMode.RUN_WITHOUT_ENCODER);
+
+        //Motor1EXT.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        //Motor22ndEXT.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        //teleOp.Motor0SHLDR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        Motor1EXT.setDirection(DcMotor.Direction.REVERSE);
+        Motor22ndEXT.setDirection(DcMotor.Direction.FORWARD);
+        //teleOp.Motor0SHLDR.setDirection(DcMotor.Direction.REVERSE);
+
+        //teleOp.Motor0SHLDR.setPower(1);
+
+        ground();
+    }
+
+    public void telemetry(Telemetry telemetry) {
+        // telemetry.addData("Current Position", getPosition());
+        // telemetry.addData("Target", target);
+        // telemetry.addData("Power", power);
+        telemetry.update();
+    }
+
+    public void ground() {
+        Motor22ndEXT.setPower(1);
+        Motor1EXT.setPower(1);
+        Motor1EXT.setTargetPosition(0);
+        Motor22ndEXT.setTargetPosition(0);
+    }
+
+    public void intextended(){
+        Motor22ndEXT.setPower(1);
+        Motor1EXT.setPower(1);
+        Motor1EXT.setTargetPosition(400);
+        Motor22ndEXT.setTargetPosition(400);
+    }
+    public void wall() {
+        Motor22ndEXT.setPower(1);
+        Motor1EXT.setPower(1);
+        Motor1EXT.setTargetPosition(400);
+        Motor22ndEXT.setTargetPosition(400);
+    }
+    public void hang() {
+        Motor1EXT.setTargetPosition(400);
+        Motor22ndEXT.setTargetPosition(400);
+    }
+    public void bucket() {
+        Motor22ndEXT.setPower(1);
+        Motor1EXT.setPower(1);
+        Motor1EXT.setTargetPosition(4000);
+        Motor22ndEXT.setTargetPosition(4000);
+    }
+
+    public void loop(Gamepad gamepad) {
+        if (GamepadStatic.isButtonPressed(gamepad, Controls.Ext)) {
+            Motor1EXT.setPower(1);
+            Motor22ndEXT.setPower(1);
+        } else if (GamepadStatic.isButtonPressed(gamepad, Controls.ExtClose)) {
+            Motor1EXT.setPower(-1);
+            Motor22ndEXT.setPower(-1);
+        } else {
+            Motor1EXT.setPower(0);
+            Motor22ndEXT.setPower(0);
         }
+
+        if (GamepadStatic.isButtonPressed(gamepad, Controls.Reset)){
+            waitToReset.trigger();
+        }
+
     }
-  /*else if (slideTrack == 2) {
-        motor_pivot.set(slidePow * ModifyingConstants.PIVOT_COEFFICIENT);
-    }*/
-
-    public double lengthToRotations(double angle, double gearRatio) {
-        return (angle*gearRatio); // Calculated for a gear/wheel of radius 27.5 mm
-    }
-    //return Motor0SHLDR.getCurrentPosition();
-    //return (motorNum == 1) ?motor_slideInner.getEncoder().getPosition() :motor_slideOuter.getEncoder().getPosition();
-
-    public double getMotorRotation(int motorNum) {
-        return (motorNum == 1) ?Motor0SHLDR.getCurrentPosition() :Motor1EXT.getCurrentPosition();
-    }
-
-    public double pidCalc(double err) {
-        return intakePID.calculate(err);
-    }
-
-
 }

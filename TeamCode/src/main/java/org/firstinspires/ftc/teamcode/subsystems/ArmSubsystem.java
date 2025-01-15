@@ -53,13 +53,10 @@ public class ArmSubsystem extends Mechanism {
 
     @Override
     public void init(HardwareMap hwMap) {
-        voltage = hwMap.voltageSensor.iterator().next();
-        pidcontroller = new PIDFController(P, I, D, F);
-        pidcontroller.setFeedForward(PIDFController.FeedForward.LINEAR);
-        pidcontroller.setRotationConstants(5000, 1425.1);
+
         Motor1EXT = hwMap.get(DcMotorEx.class, "Motor-1-EXT");
         Motor22ndEXT = hwMap.get(DcMotorEx.class, "Motor-2-2ndEXT");
-
+        ground();
 
         Motor1EXT.setMode(RunMode.STOP_AND_RESET_ENCODER);
         Motor22ndEXT.setMode(RunMode.STOP_AND_RESET_ENCODER);
@@ -78,11 +75,11 @@ public class ArmSubsystem extends Mechanism {
 
         //teleOp.Motor0SHLDR.setPower(1);
 
-        ground();
+
     }
 
     public void telemetry(Telemetry telemetry) {
-        // telemetry.addData("Current Position", getPosition());
+        //telemetry.addData("Current Position", getPosition());
         // telemetry.addData("Target", target);
         // telemetry.addData("Power", power);
         telemetry.update();
@@ -93,6 +90,11 @@ public class ArmSubsystem extends Mechanism {
         Motor1EXT.setPower(1);
         Motor1EXT.setTargetPosition(0);
         Motor22ndEXT.setTargetPosition(0);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+            opMode.idle();
+        }
     }
 
     public void intextended(){
@@ -100,32 +102,58 @@ public class ArmSubsystem extends Mechanism {
         Motor1EXT.setPower(1);
         Motor1EXT.setTargetPosition(400);
         Motor22ndEXT.setTargetPosition(400);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+            opMode.idle();
+        }
     }
     public void wall() {
         Motor22ndEXT.setPower(1);
         Motor1EXT.setPower(1);
         Motor1EXT.setTargetPosition(400);
         Motor22ndEXT.setTargetPosition(400);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+            opMode.idle();
+        }
     }
     public void hang() {
-        Motor1EXT.setTargetPosition(400);
-        Motor22ndEXT.setTargetPosition(400);
+        Motor1EXT.setTargetPosition(370);
+        Motor22ndEXT.setTargetPosition(370);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+            opMode.idle();
+        }
     }
     public void bucket() {
         Motor22ndEXT.setPower(1);
         Motor1EXT.setPower(1);
-        Motor1EXT.setTargetPosition(4000);
-        Motor22ndEXT.setTargetPosition(4000);
+        Motor1EXT.setTargetPosition(5000);
+        Motor22ndEXT.setTargetPosition(5000);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+            opMode.idle();
+        }
     }
 
     public void loop(Gamepad gamepad) {
         if (GamepadStatic.isButtonPressed(gamepad, Controls.Ext)) {
+            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
+            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setPower(1);
             Motor22ndEXT.setPower(1);
         } else if (GamepadStatic.isButtonPressed(gamepad, Controls.ExtClose)) {
+            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
+            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setPower(-1);
             Motor22ndEXT.setPower(-1);
         } else {
+            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
+            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setPower(0);
             Motor22ndEXT.setPower(0);
         }

@@ -21,7 +21,7 @@ public class NoAutoMain extends LinearOpMode {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         while (opModeInInit()) {
-            robot.scoring.arm.update();
+
         }
 
         waitForStart();

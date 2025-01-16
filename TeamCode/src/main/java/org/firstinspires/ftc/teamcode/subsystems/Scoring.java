@@ -97,9 +97,9 @@ public class Scoring extends Mechanism {
 
     public void goOpenIntake() {
         state = State.OPENINTAKE;
-        arm.intextended();
-        wrist.rotateOrigin();
         shoulder.shopenintake();
+        wrist.rotateOrigin();
+        arm.intextended();
     }
     public void goIntake() {
         state = State.INTAKE;
@@ -161,24 +161,28 @@ public class Scoring extends Mechanism {
 
         switch (state) {
             case BASKET:
+                wrist.loop(gamepad);
                 drivetrain.setNormal();
                 arm.loop(gamepad);
                 shoulder.loop(gamepad);
                 intake.loop(gamepad);
 
             case WALL:
+                wrist.loop(gamepad);
                 drivetrain.setNormal();
                 arm.loop(gamepad);
                 shoulder.loop(gamepad);
                 intake.loop(gamepad);
 
             case INTAKE:
+                wrist.loop(gamepad);
                 drivetrain.setIntake();
                 arm.loop(gamepad);
                 shoulder.loop(gamepad);
                 intake.loop(gamepad);
 
             case CLIP:
+                wrist.loop(gamepad);
                 drivetrain.setNormal();
                 arm.loop(gamepad);
                 shoulder.loop(gamepad);

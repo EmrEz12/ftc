@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -24,7 +26,7 @@ public class WristSubsystem extends Mechanism {
         Servo0WRIST = hwMap.get(CRServo.class, "Servo-0-WRIST");
         servo1 = hwMap.get(CRServo.class, "servo1");
         Servo0WRIST.setDirection(CRServo.Direction.FORWARD);
-        servo1.setDirection(CRServo.Direction.FORWARD);
+        servo1.setDirection(CRServo.Direction.REVERSE);
         rotateOrigin();
     }
 
@@ -55,5 +57,6 @@ public class WristSubsystem extends Mechanism {
         } else {
             HandClose();
         }
+
     }
 }

@@ -93,7 +93,7 @@ public class ArmSubsystem extends Mechanism {
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
-            opMode.idle();
+            Motor22ndEXT.getCurrentPosition();
         }
     }
 
@@ -105,7 +105,7 @@ public class ArmSubsystem extends Mechanism {
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
-            opMode.idle();
+            Motor22ndEXT.getCurrentPosition();
         }
     }
     public void wall() {
@@ -116,7 +116,7 @@ public class ArmSubsystem extends Mechanism {
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
-            opMode.idle();
+            Motor22ndEXT.getCurrentPosition();
         }
     }
     public void hang() {
@@ -125,7 +125,7 @@ public class ArmSubsystem extends Mechanism {
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
-            opMode.idle();
+            Motor22ndEXT.getCurrentPosition();
         }
     }
     public void bucket() {
@@ -136,7 +136,7 @@ public class ArmSubsystem extends Mechanism {
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
-            opMode.idle();
+            Motor22ndEXT.getCurrentPosition();
         }
     }
 

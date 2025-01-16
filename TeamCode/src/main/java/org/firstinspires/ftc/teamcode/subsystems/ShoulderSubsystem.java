@@ -66,7 +66,7 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         while (Motor0SHLDR.isBusy()){
-            opMode.idle();
+            Motor0SHLDR.getCurrentPosition();
         }
     }
     public void shfront(){
@@ -74,7 +74,7 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         while (Motor0SHLDR.isBusy()){
-            opMode.idle();
+            Motor0SHLDR.getCurrentPosition();
         }
     }
     public void shopenintake(){
@@ -82,7 +82,7 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         while (Motor0SHLDR.isBusy()){
-            opMode.idle();
+            Motor0SHLDR.getCurrentPosition();
         }
     }
 
@@ -91,7 +91,7 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         while (Motor0SHLDR.isBusy()){
-            opMode.idle();
+            Motor0SHLDR.getCurrentPosition();
         }
     }
     public void shhang(){
@@ -99,7 +99,7 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         while (Motor0SHLDR.isBusy()){
-            opMode.idle();
+            Motor0SHLDR.getCurrentPosition();
         }
     }
     public void shbucket(){
@@ -108,7 +108,7 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         while (Motor0SHLDR.isBusy()){
-            opMode.idle();
+            Motor0SHLDR.getCurrentPosition();
         }
     }
 

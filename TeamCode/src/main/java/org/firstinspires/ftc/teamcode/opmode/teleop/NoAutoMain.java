@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "No Auto Main", group = "mains:")
 public class NoAutoMain extends LinearOpMode {
-
     private Robot robot = new Robot(this);
 
     @Override

@@ -65,24 +65,30 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setTargetPosition(0);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor0SHLDR.isBusy()){
+        if(Motor0SHLDR.isBusy()){
             Motor0SHLDR.getCurrentPosition();
+        } else {
+            Motor0SHLDR.setPower(0);
         }
     }
     public void shfront(){
         Motor0SHLDR.setTargetPosition(1000);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor0SHLDR.isBusy()){
+        if(Motor0SHLDR.isBusy()){
             Motor0SHLDR.getCurrentPosition();
+        } else {
+            Motor0SHLDR.setPower(0);
         }
     }
     public void shopenintake(){
         Motor0SHLDR.setTargetPosition(800);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor0SHLDR.isBusy()){
+        if(Motor0SHLDR.isBusy()){
             Motor0SHLDR.getCurrentPosition();
+        } else {
+            Motor0SHLDR.setPower(0);
         }
     }
 
@@ -90,16 +96,20 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setTargetPosition(1000);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor0SHLDR.isBusy()){
+        if(Motor0SHLDR.isBusy()){
             Motor0SHLDR.getCurrentPosition();
+        } else {
+            Motor0SHLDR.setPower(0);
         }
     }
     public void shhang(){
         Motor0SHLDR.setTargetPosition(1300);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor0SHLDR.isBusy()){
+        if(Motor0SHLDR.isBusy()){
             Motor0SHLDR.getCurrentPosition();
+        } else {
+            Motor0SHLDR.setPower(0);
         }
     }
     public void shbucket(){
@@ -107,8 +117,10 @@ public class ShoulderSubsystem extends Mechanism {
         Motor0SHLDR.setTargetPosition(5600);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor0SHLDR.isBusy()){
+        if(Motor0SHLDR.isBusy()){
             Motor0SHLDR.getCurrentPosition();
+        } else {
+            Motor0SHLDR.setPower(0);
         }
     }
 

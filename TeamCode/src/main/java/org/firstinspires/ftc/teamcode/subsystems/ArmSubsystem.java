@@ -91,10 +91,13 @@ public class ArmSubsystem extends Mechanism {
         Motor1EXT.setTargetPosition(0);
         Motor22ndEXT.setTargetPosition(0);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+        Motor1EXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() && Motor1EXT.isBusy()){
             Motor22ndEXT.getCurrentPosition();
         }
+        Motor22ndEXT.setPower(0);
+        Motor1EXT.setPower(0);
+
     }
 
     public void intextended(){
@@ -103,10 +106,12 @@ public class ArmSubsystem extends Mechanism {
         Motor1EXT.setTargetPosition(400);
         Motor22ndEXT.setTargetPosition(400);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+        Motor1EXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() && Motor1EXT.isBusy()){
             Motor22ndEXT.getCurrentPosition();
         }
+        Motor22ndEXT.setPower(0);
+        Motor1EXT.setPower(0);
     }
     public void wall() {
         Motor22ndEXT.setPower(1);
@@ -114,19 +119,25 @@ public class ArmSubsystem extends Mechanism {
         Motor1EXT.setTargetPosition(400);
         Motor22ndEXT.setTargetPosition(400);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+        Motor1EXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() && Motor1EXT.isBusy()){
             Motor22ndEXT.getCurrentPosition();
         }
+        Motor22ndEXT.setPower(0);
+        Motor1EXT.setPower(0);
     }
     public void hang() {
+        Motor22ndEXT.setPower(1);
+        Motor1EXT.setPower(1);
         Motor1EXT.setTargetPosition(370);
         Motor22ndEXT.setTargetPosition(370);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+        Motor1EXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() && Motor1EXT.isBusy()){
             Motor22ndEXT.getCurrentPosition();
         }
+        Motor22ndEXT.setPower(0);
+        Motor1EXT.setPower(0);
     }
     public void bucket() {
         Motor22ndEXT.setPower(1);
@@ -134,26 +145,28 @@ public class ArmSubsystem extends Mechanism {
         Motor1EXT.setTargetPosition(5000);
         Motor22ndEXT.setTargetPosition(5000);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
-        while (Motor22ndEXT.isBusy() || Motor1EXT.isBusy()){
+        Motor1EXT.setMode(RunMode.RUN_TO_POSITION);
+        while (Motor22ndEXT.isBusy() && Motor1EXT.isBusy()){
             Motor22ndEXT.getCurrentPosition();
         }
+        Motor22ndEXT.setPower(0);
+        Motor1EXT.setPower(0);
     }
 
     public void loop(Gamepad gamepad) {
         if (GamepadStatic.isButtonPressed(gamepad, Controls.Ext)) {
             Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
-            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
+            Motor1EXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setPower(1);
             Motor22ndEXT.setPower(1);
         } else if (GamepadStatic.isButtonPressed(gamepad, Controls.ExtClose)) {
             Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
-            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
+            Motor1EXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setPower(-1);
             Motor22ndEXT.setPower(-1);
         } else {
             Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
-            Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
+            Motor1EXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setPower(0);
             Motor22ndEXT.setPower(0);
         }

@@ -103,16 +103,16 @@ public class Scoring extends Mechanism {
     }
     public void goIntake() {
         state = State.INTAKE;
-        arm.ground();
-        wrist.rotateOrigin();
         shoulder.shground();
+        wrist.rotateOrigin();
+        arm.ground();
     }
 
     public void goWall() {
         state = State.WALL;
-        arm.wall();
-        wrist.rotateMid();
         shoulder.shwall();
+        wrist.rotateMid();
+        arm.wall();
     }
 
     public void goBasket() {
@@ -125,8 +125,9 @@ public class Scoring extends Mechanism {
     public void goClip() {
         state = State.CLIP;
         shoulder.shhang();
-        arm.hang();
         wrist.rotateMid();
+        arm.hang();
+
     }
 
     @Override
@@ -145,48 +146,48 @@ public class Scoring extends Mechanism {
     }
 
     @Override
-    public void loop(Gamepad gamepad) {
-        drivetrain.loop(gamepad);
+    public void loop(Gamepad gamepad1, Gamepad gamepad2) {
+        drivetrain.loop(gamepad1);
 
-        if (GamepadStatic.isButtonPressed(gamepad, Controls.GROUND) && state != State.INTAKE) {
+        if (GamepadStatic.isButtonPressed(gamepad2, Controls.GROUND) && state != State.INTAKE) {
             goIntake();
-        } else if (GamepadStatic.isButtonPressed(gamepad, Controls.WALL) && state != State.WALL) {
+        } else if (GamepadStatic.isButtonPressed(gamepad2, Controls.WALL) && state != State.WALL) {
             goWall();
-        } else if (GamepadStatic.isButtonPressed(gamepad, Controls.BASKET) && state != State.BASKET) {
+        } else if (GamepadStatic.isButtonPressed(gamepad2, Controls.BASKET) && state != State.BASKET) {
             goBasket();
-        } else if (GamepadStatic.isButtonPressed(gamepad, Controls.HANG) && state != State.CLIP) {
+        } else if (GamepadStatic.isButtonPressed(gamepad2, Controls.HANG) && state != State.CLIP) {
             goClip();
         }
 
 
         switch (state) {
             case BASKET:
-                wrist.loop(gamepad);
+                wrist.loop(gamepad2);
                 drivetrain.setNormal();
-                arm.loop(gamepad);
-                shoulder.loop(gamepad);
-                intake.loop(gamepad);
+                arm.loop(gamepad2);
+                shoulder.loop(gamepad2);
+                intake.loop(gamepad2);
 
             case WALL:
-                wrist.loop(gamepad);
+                wrist.loop(gamepad2);
                 drivetrain.setNormal();
-                arm.loop(gamepad);
-                shoulder.loop(gamepad);
-                intake.loop(gamepad);
+                arm.loop(gamepad2);
+                shoulder.loop(gamepad2);
+                intake.loop(gamepad2);
 
             case INTAKE:
-                wrist.loop(gamepad);
+                wrist.loop(gamepad2);
                 drivetrain.setIntake();
-                arm.loop(gamepad);
-                shoulder.loop(gamepad);
-                intake.loop(gamepad);
+                arm.loop(gamepad2);
+                shoulder.loop(gamepad2);
+                intake.loop(gamepad2);
 
             case CLIP:
-                wrist.loop(gamepad);
+                wrist.loop(gamepad2);
                 drivetrain.setNormal();
-                arm.loop(gamepad);
-                shoulder.loop(gamepad);
-                intake.loop(gamepad);
+                arm.loop(gamepad2);
+                shoulder.loop(gamepad2);
+                intake.loop(gamepad2);
 
 
         }

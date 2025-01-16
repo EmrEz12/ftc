@@ -131,11 +131,11 @@ public class ShoulderSubsystem extends Mechanism {
 
 
     @Override
-    public void loop(Gamepad gamepad) {
-        if (GamepadStatic.isButtonPressed(gamepad, Controls.SHUP)) {
+    public void loop(Gamepad gamepad2) {
+        if (GamepadStatic.isButtonPressed(gamepad2, Controls.SHUP)) {
             Motor0SHLDR.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor0SHLDR.setPower(1);
-        } else if (GamepadStatic.isButtonPressed(gamepad, Controls.SHDOWN)) {
+        } else if (GamepadStatic.isButtonPressed(gamepad2, Controls.SHDOWN)) {
             Motor0SHLDR.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor0SHLDR.setPower(-0.9);
         } else {

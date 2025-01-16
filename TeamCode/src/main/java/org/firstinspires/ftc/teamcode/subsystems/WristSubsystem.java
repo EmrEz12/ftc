@@ -51,8 +51,8 @@ public class WristSubsystem extends Mechanism {
 
 
     @Override
-    public void loop(Gamepad gamepad) {
-        if (GamepadStatic.isButtonPressed(gamepad, Controls.OPEN)) {
+    public void loop(Gamepad gamepad2) {
+        if (GamepadStatic.isButtonPressed(gamepad2, Controls.OPEN)) {
             HandOpen();
         } else {
             HandClose();

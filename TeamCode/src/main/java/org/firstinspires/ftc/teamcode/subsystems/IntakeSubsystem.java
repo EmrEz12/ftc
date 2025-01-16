@@ -54,10 +54,10 @@ public class IntakeSubsystem extends Mechanism {
     }
 
     @Override
-    public void loop(Gamepad gamepad) {
-        if (GamepadStatic.isButtonPressed(gamepad, Controls.INTAKE)) {
+    public void loop(Gamepad gamepad2) {
+        if (GamepadStatic.isButtonPressed(gamepad2, Controls.INTAKE)) {
             intake();
-        } else if (GamepadStatic.isButtonPressed(gamepad, Controls.OUTTAKE)) {
+        } else if (GamepadStatic.isButtonPressed(gamepad2, Controls.OUTTAKE)) {
             outtake();
         } else {
             intstop();

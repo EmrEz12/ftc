@@ -47,13 +47,13 @@ public class Drivetrain extends Mechanism {
     }
 
     @Override
-    public void loop(Gamepad gamepad) {
+    public void loop(Gamepad gamepad1) {
         drivetrain.setDrivePowers(
                 new PoseVelocity2d(
                         new Vector2d(
-                        -gamepad.left_stick_y * speed,
-                        -gamepad.left_stick_x * speed),
-                        -gamepad.right_stick_x * turnSpeed));
+                        -gamepad1.left_stick_y * speed,
+                        -gamepad1.left_stick_x * speed),
+                        -gamepad1.right_stick_x * turnSpeed));
 
         drivetrain.updatePoseEstimate();
 

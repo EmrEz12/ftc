@@ -153,13 +153,13 @@ public class ArmSubsystem extends Mechanism {
         Motor1EXT.setPower(0);
     }
 
-    public void loop(Gamepad gamepad) {
-        if (GamepadStatic.isButtonPressed(gamepad, Controls.Ext)) {
+    public void loop(Gamepad gamepad2) {
+        if (GamepadStatic.isButtonPressed(gamepad2, Controls.Ext)) {
             Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setPower(1);
             Motor22ndEXT.setPower(1);
-        } else if (GamepadStatic.isButtonPressed(gamepad, Controls.ExtClose)) {
+        } else if (GamepadStatic.isButtonPressed(gamepad2, Controls.ExtClose)) {
             Motor22ndEXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setMode(RunMode.RUN_WITHOUT_ENCODER);
             Motor1EXT.setPower(-1);
@@ -171,7 +171,7 @@ public class ArmSubsystem extends Mechanism {
             Motor22ndEXT.setPower(0);
         }
 
-        if (GamepadStatic.isButtonPressed(gamepad, Controls.Reset)){
+        if (GamepadStatic.isButtonPressed(gamepad2, Controls.Reset)){
             waitToReset.trigger();
         }
 

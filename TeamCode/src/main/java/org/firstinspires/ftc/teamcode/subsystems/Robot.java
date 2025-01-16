@@ -26,7 +26,7 @@ public class Robot extends Mechanism {
     }
 
     @Override
-    public void loop(Gamepad gamepad) {
-        scoring.loop(gamepad);
+    public void loop(Gamepad gamepad1, Gamepad gamepad2) {
+        scoring.loop(gamepad1, gamepad2);
     }
 }

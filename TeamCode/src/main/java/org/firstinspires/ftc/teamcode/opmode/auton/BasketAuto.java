@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmode.auton;
 
+import static org.firstinspires.ftc.teamcode.opmode.auton.BasketConstantsDash.basketConstants;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.lib.AutoCommandMachine;
@@ -20,6 +23,7 @@ import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 @Autonomous(name = "BasketAuto", preselectTeleOp = "Main")
 public class BasketAuto extends LinearOpMode{
     private boolean busy = false;
+    private BasketConstants basketConstants = BasketConstantsDash.basketConstants;
     private Action hang1Action;
     private Action farSampleAction;
     private Action basket1Action;
@@ -27,6 +31,20 @@ public class BasketAuto extends LinearOpMode{
     private Action basket2Action;
     private Action wallSampleAction;
     private Action basket3Action;
+    private Action gop4Action;
+    private Action push2Action;
+    private Action gop5Action;
+    private Action gop6Action;
+    private Action push3Action;
+    private Action get1Action;
+    private Action put1Action;
+    private Action get2Action;
+    private Action put3Action;
+    private Action get4Action;
+    private Action put4Action;
+    private Action parkAction;
+    private Action get3Action;
+    private Action put2Action;
 
     private MecanumDrive drive;
 
@@ -37,6 +55,20 @@ public class BasketAuto extends LinearOpMode{
     private Command basket2Command = () -> followActionAsync(basket2Action);
     private Command wallSampleCommand = () -> followActionAsync(wallSampleAction);
     private Command basket3Command = () -> followActionAsync(basket3Action);
+    private Command gop4Command = () -> followActionAsync(gop4Action);
+    private Command push2Command = () -> followActionAsync(push2Action);
+    private Command gop5Command = () -> followActionAsync(gop5Action);
+    private Command gop6Command = () -> followActionAsync(gop6Action);
+    private Command push3Command = () -> followActionAsync(push3Action);
+    private Command get1Command = () -> followActionAsync(get1Action);
+    private Command put1Command = () -> followActionAsync(put1Action);
+    private Command get2Command = () -> followActionAsync(get2Action);
+    private Command put2Command = () -> followActionAsync(put3Action);
+    private Command get3Command = () -> followActionAsync(get2Action);
+    private Command put3Command = () -> followActionAsync(put3Action);
+    private Command get4Command = () -> followActionAsync(get4Action);
+    private Command put4Command = () -> followActionAsync(put4Action);
+    private Command parkCommand = () -> followActionAsync(parkAction);
 
     private void followActionAsync(Action action){
         busy = true;
@@ -68,6 +100,7 @@ public class BasketAuto extends LinearOpMode{
     private Command shHang = () -> shoulder.shhang();
     private Command shWall = () -> shoulder.shwall();
     private Command shBucket = () -> shoulder.shbucket();
+    private Command shHangdown = () -> shoulder.shhangdown();
     private Command shopenintake = () -> shoulder.shopenintake();
     private Command armFront = () -> arm.intextended();
     private Command armWall = () -> arm.wall();
@@ -76,26 +109,31 @@ public class BasketAuto extends LinearOpMode{
     private Command armBucket = () -> arm.bucket();
 
     private CommandSequence hang1Sequence = new CommandSequence()
-            .addCommand(hang1Command)
-            .addCommand(busyTrue)
+            .addCommand(shHang)
+            //.addCommand(busyTrue)
             .addCommand(armHang)
+            .addCommand(wristMid)
+            .addCommand(hang1Command)
             .build();
     private CommandSequence farSampleSequence = new CommandSequence()
+            .addCommand(armWall)
+            .addCommand(shWall)
+            .addCommand(wristMid)
             .addCommand(farSampleCommand)
-            .addCommand(busyTrue)
-            .addCommand(busyFalse)
+            //.addCommand(busyTrue)
+            //.addCommand(busyFalse)
             .build();
     private CommandSequence basket1Sequence = new CommandSequence()
             .addCommand(basket1Command)
-            .addCommand(busyTrue)
-            .addWaitCommand(0.2)
-            .addCommand(busyFalse)
+            //.addCommand(busyTrue)
+            //.addWaitCommand(0.2)
+            //.addCommand(busyFalse)
             .build();
     private CommandSequence centerSampleSequence = new CommandSequence()
             .addCommand(centerSampleCommand)
-            .addCommand(busyTrue)
-            .addWaitCommand(2)
-            .addCommand(busyFalse)
+            //.addCommand(busyTrue)
+            //.addWaitCommand(2)
+            //.addCommand(busyFalse)
             .build();
     private CommandSequence basket2Sequence = new CommandSequence()
             .addCommand(basket2Command)
@@ -106,22 +144,99 @@ public class BasketAuto extends LinearOpMode{
     private CommandSequence basket3Sequence = new CommandSequence()
             .addCommand(basket3Command)
             .build();
+    private CommandSequence push2Sequence = new CommandSequence()
+            .addCommand(push2Command)
+            .build();
+    private CommandSequence gop5Sequence = new CommandSequence()
+            .addCommand(gop5Command)
+            .build();
+    private CommandSequence gop6Sequence = new CommandSequence()
+            .addCommand(gop6Command)
+            .build();
+    private CommandSequence push3Sequence = new CommandSequence()
+            .addCommand(push3Command)
+            .addCommand(grabOpen)
+            .build();
+    private CommandSequence get1Sequence = new CommandSequence()
+            .addCommand(get1Command)
+            .addCommand(grabClose)
+            .build();
+    private CommandSequence put1Sequence = new CommandSequence()
+            .addCommand(put1Command)
+            .addCommand(shHang)
+            .addCommand(armHang)
+            .addCommand(wristMid)
+            .addCommand(shHangdown)
+            .addCommand(grabOpen)
+            .build();
+    private CommandSequence get2Sequence = new CommandSequence()
+            .addCommand(get2Command)
+            .addCommand(grabClose)
+            .build();
+    private CommandSequence put2Sequence = new CommandSequence()
+            .addCommand(put2Command)
+            .addCommand(shHang)
+            .addCommand(armHang)
+            .addCommand(wristMid)
+            .addCommand(shHangdown)
+            .addCommand(grabOpen)
+            .build();
+    private CommandSequence get3Sequence = new CommandSequence()
+            .addCommand(get3Command)
+            .addCommand(grabClose)
+            .build();
+    private CommandSequence put3Sequence = new CommandSequence()
+            .addCommand(put3Command)
+            .addCommand(shHang)
+            .addCommand(armHang)
+            .addCommand(wristMid)
+            .addCommand(shHangdown)
+            .addCommand(grabOpen)
+            .build();
+    private CommandSequence get4Sequence = new CommandSequence()
+            .addCommand(get4Command)
+            .addCommand(grabClose)
+            .build();
+    private CommandSequence put4Sequence = new CommandSequence()
+            .addCommand(put4Command)
+            .addCommand(shHang)
+            .addCommand(armHang)
+            .addCommand(wristMid)
+            .addCommand(shHangdown)
+            .addCommand(grabOpen)
+            .build();
+    private CommandSequence parkSequence = new CommandSequence()
+            .addCommand(parkCommand)
+            .build();
+
     private AutoCommandMachine commandMachine = new AutoCommandMachine()
             .addCommandSequence(hang1Sequence)
-//            .addCommandSequence(farSampleSequence)
-//            .addCommandSequence(basket1Sequence)
-//            .addCommandSequence(centerSampleSequence)
-//            .addCommandSequence(basket2Sequence)
-//            .addCommandSequence(wallSampleSequence)
-//            .addCommandSequence(basket3Sequence)
             .addCommandSequence(farSampleSequence)
+            .addCommandSequence(basket1Sequence)
+            .addCommandSequence(centerSampleSequence)
+            .addCommandSequence(basket2Sequence)
+            .addCommandSequence(wallSampleSequence)
+            .addCommandSequence(basket3Sequence)
+            .addCommandSequence(push2Sequence)
+            .addCommandSequence(gop5Sequence)
+            .addCommandSequence(gop6Sequence)
+            .addCommandSequence(push3Sequence)
+            .addCommandSequence(get1Sequence)
+            .addCommandSequence(put1Sequence)
+            .addCommandSequence(get2Sequence)
+            .addCommandSequence(put2Sequence)
+            .addCommandSequence(get3Sequence)
+            .addCommandSequence(put3Sequence)
+            .addCommandSequence(get4Sequence)
+            .addCommandSequence(put4Sequence)
+            .addCommandSequence(parkSequence)
             .build();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        /*telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         arm = new ArmSubsystem(this);
-        drive = new MecanumDrive(hardwareMap, 0);
+        drive = new MecanumDrive(hardwareMap, BasketConstantsDash.START_POSE);
         shoulder = new ShoulderSubsystem(this);
         intake = new IntakeSubsystem(this);
         wrist = new WristSubsystem(this);
@@ -130,46 +245,94 @@ public class BasketAuto extends LinearOpMode{
         shoulder.init(hardwareMap);
         arm.ground();
         wrist.init(hardwareMap);
-        intake.init(hardwareMap);*/
+        intake.init(hardwareMap);
 
 
 //        TrajectoryVelocityConstraint velConstraint = SampleMecanumDrive.getVelocityConstraint(20, 1, DriveConstants.TRACK_WIDTH);
 //        TrajectoryAccelerationConstraint accelConstraint = SampleMecanumDrive.getAccelerationConstraint(30);
-        /*
+
         hang1Action = drive
                 .actionBuilder(BasketConstantsDash.START_POSE)
-                .lineToY(basketConstants.CHAMBER.getVec().y)
-                .setTangent(-Math.PI / 2)
+                .splineToLinearHeading(basketConstants.FORWARD.getPose(), basketConstants.FORWARD.getH())
                 .build();
         farSampleAction = drive
-                .actionBuilder(basketConstants.CHAMBER.getPose())
-                .splineToLinearHeading(basketConstants.FAR_SAMPLE.getPose(), basketConstants.FAR_SAMPLE.getH())
-                .setTangent(0)
+                .actionBuilder(basketConstants.FORWARD.getPose())
+                .splineToLinearHeading(basketConstants.Go1.getPose(), basketConstants.Go1.getH())
                 .build();
         basket1Action = drive
-                .actionBuilder(basketConstants.FAR_SAMPLE.getPose())
-                .splineToLinearHeading(basketConstants.BASKET_1.getPose(), basketConstants.BASKET_1.getH())
-                .setTangent(Math.PI / 4)
+                .actionBuilder(basketConstants.Go1.getPose())
+                .splineToLinearHeading(basketConstants.Gop1.getPose(), basketConstants.Gop1.getH())
                 .build();
         centerSampleAction = drive
-                .actionBuilder(basketConstants.BASKET_1.getPose())
-                .splineToLinearHeading(basketConstants.CENTER_SAMPLE.getPose(), basketConstants.CENTER_SAMPLE.getH())
-                .setTangent(-Math.PI / 4)
+                .actionBuilder(basketConstants.Gop1.getPose())
+                .splineToLinearHeading(basketConstants.Gop2.getPose(), basketConstants.Gop2.getH())
                 .build();
         basket2Action = drive
-                .actionBuilder(basketConstants.CENTER_SAMPLE.getPose())
-                .splineToLinearHeading(basketConstants.BASKET_2.getPose(), basketConstants.BASKET_2.getH())
-                .setTangent(Math.PI / 4)
+                .actionBuilder(basketConstants.Gop2.getPose())
+                .splineToLinearHeading(basketConstants.Push1.getPose(), basketConstants.Push1.getH())
                 .build();
         wallSampleAction = drive
-                .actionBuilder(basketConstants.BASKET_2.getPose())
-                .splineToLinearHeading(basketConstants.WALL_SAMPLE.getPose(), basketConstants.WALL_SAMPLE.getH())
-                .setTangent(-Math.PI / 4)
+                .actionBuilder(basketConstants.Push1.getPose())
+                .splineToLinearHeading(basketConstants.Gop3.getPose(), basketConstants.Gop4.getH())
                 .build();
         basket3Action = drive
-                .actionBuilder(basketConstants.WALL_SAMPLE.getPose())
-                .splineToLinearHeading(basketConstants.BASKET_3.getPose(), basketConstants.BASKET_3.getH())
+                .actionBuilder(basketConstants.Gop3.getPose())
+                .splineToLinearHeading(basketConstants.Gop4.getPose(), basketConstants.Gop4.getH())
                 .build();
+        push2Action = drive
+                .actionBuilder(basketConstants.Gop4.getPose())
+                .splineToLinearHeading(basketConstants.Push2.getPose(), basketConstants.Push2.getH())
+                .build();
+        gop5Action = drive
+                .actionBuilder(basketConstants.Push2.getPose())
+                .splineToLinearHeading(basketConstants.Gop5.getPose(), basketConstants.Gop5.getH())
+                .build();
+        gop6Action = drive
+                .actionBuilder(basketConstants.Gop5.getPose())
+                .splineToLinearHeading(basketConstants.Gop6.getPose(), basketConstants.Gop6.getH())
+                .build();
+        push3Action = drive
+                .actionBuilder(basketConstants.Gop6.getPose())
+                .splineToLinearHeading(basketConstants.Push3.getPose(), basketConstants.Push3.getH())
+                .build();
+        get1Action = drive
+                .actionBuilder(basketConstants.Push3.getPose())
+                .splineToLinearHeading(basketConstants.Get1.getPose(), basketConstants.Get1.getH())
+                .build();
+        put1Action = drive
+                .actionBuilder(basketConstants.Get1.getPose())
+                .splineToLinearHeading(basketConstants.Put1.getPose(), basketConstants.Put1.getH())
+                .build();
+        get2Action = drive
+                .actionBuilder(basketConstants.Put1.getPose())
+                .splineToLinearHeading(basketConstants.Get2.getPose(), basketConstants.Get2.getH())
+                .build();
+        put2Action = drive
+                .actionBuilder(basketConstants.Get2.getPose())
+                .splineToLinearHeading(basketConstants.Put2.getPose(), basketConstants.Put2.getH())
+                .build();
+        get3Action = drive
+                .actionBuilder(basketConstants.Put2.getPose())
+                .splineToLinearHeading(basketConstants.Get3.getPose(), basketConstants.Get3.getH())
+                .build();
+        put3Action = drive
+                .actionBuilder(basketConstants.Get3.getPose())
+                .splineToLinearHeading(basketConstants.Put3.getPose(), basketConstants.Put3.getH())
+                .build();
+        get4Action = drive
+                .actionBuilder(basketConstants.Put3.getPose())
+                .splineToLinearHeading(basketConstants.Get4.getPose(), basketConstants.Get4.getH())
+                .build();
+        put4Action = drive
+                .actionBuilder(basketConstants.Get4.getPose())
+                .splineToLinearHeading(basketConstants.Put4.getPose(), basketConstants.Put4.getH())
+                .build();
+        parkAction = drive
+                .actionBuilder(basketConstants.Put4.getPose())
+                .splineToLinearHeading(basketConstants.Park.getPose(), basketConstants.Park.getH())
+                .build();
+
+
 
         while(opModeInInit() && !isStopRequested()){
             drive.updatePoseEstimate();

@@ -116,8 +116,8 @@ public class ArmSubsystem extends Mechanism {
     public void wall() {
         Motor22ndEXT.setPower(1);
         Motor1EXT.setPower(1);
-        Motor1EXT.setTargetPosition(400);
-        Motor22ndEXT.setTargetPosition(400);
+        Motor1EXT.setTargetPosition(0);
+        Motor22ndEXT.setTargetPosition(0);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         Motor1EXT.setMode(RunMode.RUN_TO_POSITION);
         while (Motor22ndEXT.isBusy() && Motor1EXT.isBusy()){
@@ -129,8 +129,8 @@ public class ArmSubsystem extends Mechanism {
     public void hang() {
         Motor22ndEXT.setPower(1);
         Motor1EXT.setPower(1);
-        Motor1EXT.setTargetPosition(370);
-        Motor22ndEXT.setTargetPosition(370);
+        Motor1EXT.setTargetPosition(2450);
+        Motor22ndEXT.setTargetPosition(2450);
         Motor22ndEXT.setMode(RunMode.RUN_TO_POSITION);
         Motor1EXT.setMode(RunMode.RUN_TO_POSITION);
         while (Motor22ndEXT.isBusy() && Motor1EXT.isBusy()){

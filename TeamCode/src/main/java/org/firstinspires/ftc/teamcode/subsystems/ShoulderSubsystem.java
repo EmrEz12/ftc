@@ -82,7 +82,7 @@ public class ShoulderSubsystem extends Mechanism {
         }
     }
     public void shopenintake(){
-        Motor0SHLDR.setTargetPosition(800);
+        Motor0SHLDR.setTargetPosition(500);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         if(Motor0SHLDR.isBusy()){
@@ -93,7 +93,17 @@ public class ShoulderSubsystem extends Mechanism {
     }
 
     public void shwall(){
-        Motor0SHLDR.setTargetPosition(1000);
+        Motor0SHLDR.setTargetPosition(900);
+        Motor0SHLDR.setPower(1);
+        Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
+        if(Motor0SHLDR.isBusy()){
+            Motor0SHLDR.getCurrentPosition();
+        } else {
+            Motor0SHLDR.setPower(0);
+        }
+    }
+    public void shhangdown(){
+        Motor0SHLDR.setTargetPosition(2500);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         if(Motor0SHLDR.isBusy()){
@@ -103,7 +113,7 @@ public class ShoulderSubsystem extends Mechanism {
         }
     }
     public void shhang(){
-        Motor0SHLDR.setTargetPosition(1300);
+        Motor0SHLDR.setTargetPosition(3000);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         if(Motor0SHLDR.isBusy()){
@@ -114,7 +124,7 @@ public class ShoulderSubsystem extends Mechanism {
     }
     public void shbucket(){
 
-        Motor0SHLDR.setTargetPosition(5600);
+        Motor0SHLDR.setTargetPosition(4800);
         Motor0SHLDR.setPower(1);
         Motor0SHLDR.setMode(RunMode.RUN_TO_POSITION);
         if(Motor0SHLDR.isBusy()){

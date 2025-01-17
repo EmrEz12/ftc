@@ -93,7 +93,7 @@ public class BasketConstants{
     public static Constant Get4 = new Constant(
             TILE_LENGTH * 1.5 + BOT_WIDTH / 2 + 3.7,
             -WALL_POS + BOT_LENGTH / 2 + 6.25,
-            UP
+            DOWN
     );
     public static Constant Put4 = new Constant(
             BOT_WIDTH / 2 - 4,

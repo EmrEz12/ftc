@@ -23,7 +23,6 @@ public class Observation3Sample extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Pose2d intialPose = new Pose2d(8.75, -63.13, Math.toRadians(90));
         Arm arm = new Arm(hardwareMap);
         Claw claw = new Claw(hardwareMap);
         Pose2d initialPose = new Pose2d(8.75, -63.13, Math.toRadians(90));
@@ -33,16 +32,18 @@ public class Observation3Sample extends LinearOpMode {
 
         while (opModeIsActive()) {
             // FIRST SCORE WITH PRELOAD
-            Actions.runBlocking(drive.actionBuilder(intialPose)
+            Actions.runBlocking(drive.actionBuilder(initialPose)
+                    .afterTime(0.0, arm.closeArm())
                     .afterTime(0.0, arm.armUpSh())
-                    .afterTime(0.5, arm.armUpExt())
+                    .afterTime(1, arm.armUpExt())
                     .afterTime(2.6, arm.armMidSh())
-                    .strafeToLinearHeading(new Vector2d(8.75, -37.12), Math.toRadians(90))
+                    .strafeToLinearHeading(new Vector2d(8.75, -41.12), Math.toRadians(90))
                     .build());
 
             // GO TO FIRST PICKUP AND PICKUP
             Actions.runBlocking(drive.actionBuilder(new Pose2d(8.75, -37.12, Math.toRadians(90)))
-                    .strafeToLinearHeading(new Vector2d(23,-41), Math.toRadians(30))
+                    .strafeToLinearHeading(new Vector2d(31,-46), Math.toRadians(30))
+                    .afterTime(0, arm.openArm())
                     .afterTime(0.4, arm.armDownSh())
                     .afterTime(0.2, arm.armDownExt())
                     .afterTime(0.4, claw.clawUpSh())
@@ -53,28 +54,28 @@ public class Observation3Sample extends LinearOpMode {
 
             // THROW HUMAN ZONE AND TURN FOR SECOND PICKUP
             Actions.runBlocking(drive.actionBuilder(new Pose2d(23, -41, Math.toRadians(30)))
-                    .strafeToLinearHeading(new Vector2d(23,-41), Math.toRadians(-30))
+                    .strafeToLinearHeading(new Vector2d(31,-46), Math.toRadians(330))
                     .afterTime(0.9, claw.openClaw())
                     .afterTime(1.2, claw.clawExt())
-                    .strafeToLinearHeading(new Vector2d(23,-41), Math.toRadians(25))
+                    .strafeToLinearHeading(new Vector2d(31,-46), Math.toRadians(25))
                     .afterTime(2.2, claw.clawExtDownSh())
                     .afterTime(2.7, claw.clawUpSh())
                     .build());
 
             // SECOND THROW HUMAN AND CLOSE EXT
             Actions.runBlocking(drive.actionBuilder(new Pose2d(23, -41, Math.toRadians(25)))
-                    .strafeToLinearHeading(new Vector2d(23,-41), Math.toRadians(-30))
+                    .strafeToLinearHeading(new Vector2d(23,-41), Math.toRadians(330))
                     .afterTime(1, claw.openClaw())
                     .afterTime(1.3, claw.clawExtOrigin())
                     .build());
 
             // INTAKE FROM HUMAN ZONE AND GO BACK ARM UP
-            Actions.runBlocking(drive.actionBuilder(new Pose2d(23, -41, Math.toRadians(-30)))
-                    .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(-90))
+            Actions.runBlocking(drive.actionBuilder(new Pose2d(23, -41, Math.toRadians(330)))
+                    .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270))
                     .afterTime(0.3, arm.intake())
-                    .strafeToLinearHeading(new Vector2d(48, -59), Math.toRadians(-90))
+                    .strafeToLinearHeading(new Vector2d(48, -59), Math.toRadians(270))
                     .afterTime(3.8, arm.closeArm())
-                    .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(-90))
+                    .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270))
                     .afterTime(4.4, arm.intakeStop())
                     .afterTime(4.4, arm.armUpSh())
                     .afterTime(4.4, arm.armUpExt())
@@ -88,48 +89,48 @@ public class Observation3Sample extends LinearOpMode {
 
             // RETURN HUMAN FOR 3RD SPECIMEN
             Actions.runBlocking(drive.actionBuilder(new Pose2d(7.65, -37.12, Math.toRadians(90)))
-                    .strafeToLinearHeading(new Vector2d(48,-47), Math.toRadians(-90))
+                    .strafeToLinearHeading(new Vector2d(48,-47), Math.toRadians(270))
                     .afterTime(0.6, arm.armDownExt())
                     .afterTime(0.6, arm.armDownSh())
                     .build());
 
             // TAKE 3RD SPECIMEN
-            Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(-90)))
+            Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(270)))
                     .afterTime(0.3, arm.intake())
-                    .strafeToLinearHeading(new Vector2d(48, -59), Math.toRadians(-90))
+                    .strafeToLinearHeading(new Vector2d(48, -59), Math.toRadians(270))
                     .afterTime(3.8, arm.closeArm())
-                    .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(-90))
+                    .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270))
                     .afterTime(4.4, arm.intakeStop())
                     .afterTime(4.4, arm.armUpSh())
                     .afterTime(4.4, arm.armUpExt())
                     .build());
 
             // SCORE 3RD SPECIMEN
-            Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(-90)))
+            Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(270)))
                     .strafeToLinearHeading(new Vector2d(6.65, -37.12), Math.toRadians(90))
                     .afterTime(4, arm.armMidSh())
                     .build());
 
             // RETURN HUMAN FOR 4TH SPECIMEN
             Actions.runBlocking(drive.actionBuilder(new Pose2d(6.65, -37.12, Math.toRadians(90)))
-                    .strafeToLinearHeading(new Vector2d(48,-47), Math.toRadians(-90))
+                    .strafeToLinearHeading(new Vector2d(48,-47), Math.toRadians(270))
                     .afterTime(0.6, arm.armDownExt())
                     .afterTime(0.6, arm.armDownSh())
                     .build());
 
             // TAKE 4TH SPECIMEN
-            Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(-90)))
+            Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(270)))
                     .afterTime(0.3, arm.intake())
-                    .strafeToLinearHeading(new Vector2d(48, -59), Math.toRadians(-90))
+                    .strafeToLinearHeading(new Vector2d(48, -59), Math.toRadians(270))
                     .afterTime(3.8, arm.closeArm())
-                    .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(-90))
+                    .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270))
                     .afterTime(4.4, arm.intakeStop())
                     .afterTime(4.4, arm.armUpSh())
                     .afterTime(4.4, arm.armUpExt())
                     .build());
 
             // SCORE 4TH SPECIMEN
-            Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(-90)))
+            Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(270)))
                     .strafeToLinearHeading(new Vector2d(5.65, -37.12), Math.toRadians(90))
                     .afterTime(4, arm.armMidSh())
                     .build());

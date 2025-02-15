@@ -83,7 +83,7 @@ public class Observation3Sample extends LinearOpMode {
 
             // SCORE 2ND SPECIMEN
             Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(-90)))
-                    .strafeToLinearHeading(new Vector2d(7.65, -37.12), Math.toRadians(90))
+                    .strafeToLinearHeading(new Vector2d(7.65, -41.12), Math.toRadians(90))
                     .afterTime(4, arm.armMidSh())
                     .build());
 
@@ -107,7 +107,7 @@ public class Observation3Sample extends LinearOpMode {
 
             // SCORE 3RD SPECIMEN
             Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(270)))
-                    .strafeToLinearHeading(new Vector2d(6.65, -37.12), Math.toRadians(90))
+                    .strafeToLinearHeading(new Vector2d(6.65, -41.12), Math.toRadians(90))
                     .afterTime(4, arm.armMidSh())
                     .build());
 
@@ -131,7 +131,7 @@ public class Observation3Sample extends LinearOpMode {
 
             // SCORE 4TH SPECIMEN
             Actions.runBlocking(drive.actionBuilder(new Pose2d(48, -47, Math.toRadians(270)))
-                    .strafeToLinearHeading(new Vector2d(5.65, -37.12), Math.toRadians(90))
+                    .strafeToLinearHeading(new Vector2d(5.65, -41.12), Math.toRadians(90))
                     .afterTime(4, arm.armMidSh())
                     .build());
 
